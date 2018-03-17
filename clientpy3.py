@@ -35,6 +35,10 @@ PASSWORD = "jzqzhang"
 def move(angle):
     run(USER, PASSWORD, "ACCELERATE " + str(angle) + " 1")
 
+def target(x, y):
+    print(str(x) + " " + str(y))
+
+
 def status():
     return run(USER, PASSWORD, "STATUS")
 
@@ -45,7 +49,25 @@ def scan(x, y):
     run(USER, PASSWORD, "SCAN " + str(x) + " " + str(y))
 
 def handle_status(status):
-    print(status[0:10])
+    if status[0:10] == "STATUS_OUT":
+        index = status.find("MINES")
+        if int(status[index+6:index+7]) > 0:
+            relevant_status = status[index+8:]
+            coord_index = relevant_status.find(" ")
+            relevant_status = relevant_status[coord_index + 1:]
+            coord_end = relevant_status.find(" ")
+
+            coord_x = float(relevant_status[:coord_end])
+
+            relevant_status = relevant_status[coord_end + 1:]
+            coord_end = relevant_status.find(" ")
+
+            coord_y = float(relevant_status[:coord_end])
+
+            target(coord_x, coord_y)
+
+
+
 
 move(3.14/6)
 
