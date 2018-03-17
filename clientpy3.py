@@ -29,8 +29,6 @@ main.bind('<Up>', upKey)
 main.bind('<Down>', downKey)
 frame.pack()
 
-top = tkinter.Tk()
-
 mines = []
 
 def run(user, password, * commands):
@@ -156,14 +154,9 @@ def handle_status(status):
 
 move(3.14/3)
 
-#top.mainloop()
-
 main.mainloop()
 
 while(True):
     sleep(0.01)
     status()
-<<<<<<< HEAD
-=======
 
->>>>>>> 9145ad0e665abbd89e883c9794d41ff8db03b694
