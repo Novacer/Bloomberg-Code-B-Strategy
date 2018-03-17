@@ -129,10 +129,10 @@ def bomb_mine(our_x, our_y, our_dx, our_dy, x, y):
 
 def escape(our_x, our_y, our_dx, our_dy):
     if our_dx != 0 and our_dy != 0:
-        set_bomb(our_x-1, our_y-1, 5000)
+        set_bomb(our_x-1, our_y-1, 1)
     else:
         move (1)
-        set_bomb(our_x-1, our_y-1, 5000)
+        set_bomb(our_x-1, our_y-1, 1)
 
 def defend_mine(our_x, our_y, our_dx, our_dy, our_mine_x, our_mine_y):
     if math.fabs(our_x - x) < 500 and math.fabs(our_y - y) < 500:
