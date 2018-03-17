@@ -1,0 +1,50 @@
+Algorithm:
+
+Board size stays the same
+Check corners first
+Stay on sides
+If new bomb is sensed within range
+
+Bomb can be used as propulsion in emergencies
+
+Inner square could be the area we move in
+
+#########_______________________________________________________________#########
+#                                                                               #
+#                                                                               #
+#        _______________________________________________________________ o      #
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                    OOOOO                                      |       |
+|       |                   OOOOOOO                                     |       |
+|       |                   OOOOOOO                                     |       |
+|       |                    OOOOO                                      |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                               |   .   |
+|       |                                                               |       |
+|       |                                                           .   |       |
+|       |                                                               |       |
+|       |                                                               |       |
+|       |                                                    .          |       |
+|       |                                                               |   <   |
+|       |_______________________________________________________________|       |
+#                                                        .                      #
+#                                                                               #
+#########_______________________________________________________________#########
+Bomb Placement
+  Setup a bomb just out of range of your position (long-time) --> Deter others
+  When another player gets close, drop a fast bomb on the mine and leave
+
+
+
+If mine_owned exists nearby and a new player appears directed towards it
+(check status twice to check other player direction), place bomb within range and escape
+
+Concept: Push player into wormhole

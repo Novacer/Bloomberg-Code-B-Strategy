@@ -3,7 +3,6 @@ import sys
 from time import sleep
 import math
 
-
 from tkinter import *
 
 main = Tk()
@@ -94,10 +93,15 @@ def target(our_x, our_y, our_dx, our_dy, x, y):
      #   return
 
     #v_norm = [x/v_norm_factor for x in current_velocity]
-
     #accel_vector = [(v_norm[0]) - (d_norm[0]), (v_norm[1]) - (d_norm[1])]
     #if accel_vector[0] == 0:
      #   return
+
+    accel_vector = [(3 * v_norm[0]) - (3 * d_norm[0]), (3 * v_norm[1]) - (3 * d_norm[1])]
+    if accel_vector[0] == 0:
+        return
+
+    angle = - math.atan(accel_vector[1] / accel_vector[0])
 
     angle = - math.atan2(d_norm[1],  d_norm[0])
     print("moved: " + str(angle))
@@ -119,6 +123,24 @@ def set_bomb(x, y, t):
 def fast_bomb(x, y):
     set_bomb(x, y, 10000)
 
+def bomb_mine(our_x, our_y, our_dx, our_dy, x, y):
+    if math.fabs(our_x - x) < 100 and math.fabs(our_y - y) < 100:
+        set_bomb(our_x, our_y, 300000)
+    else
+        target(our_x, our_y, our_dx, our_dy, x, y)
+
+def escape(our_x, our_y, our_dx, our_dy):
+    if our_dx != 0 and our_dy != 0:
+        set_bomb(our_x-1, our_y-1, 5000)
+    else
+        move (1)
+        set_bomb(our_x-1, our_y-1, 5000)
+
+def defend_mine(our_x, our_y, our_dx, our_dy, our_mine_x, our_mine_y):
+    if math.fabs(our_x - x) < 500 and math.fabs(our_y - y) < 500:
+        escape(our_x, our_y, our_dx, our_dy)
+    else
+        return
 
 def handle_status(status):
     if status[0:10] == "STATUS_OUT":
@@ -184,4 +206,3 @@ main.mainloop()
 while(True):
     sleep(0.01)
     status()
-
