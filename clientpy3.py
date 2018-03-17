@@ -2,7 +2,7 @@ import socket
 import sys
 from time import sleep
 
-
+mines = []
 
 def run(user, password, * commands):
     HOST, PORT = "codebb.cloudapp.net", 17429
@@ -35,7 +35,7 @@ PASSWORD = "jzqzhang"
 def move(angle):
     run(USER, PASSWORD, "ACCELERATE " + str(angle) + " 1")
 
-def target(our_x, our_y, x, y):
+def target(our_x, our_y, our_dx, our_dy, x, y):
     print(str(our_x) + " " + str(our_y))
     print(str(x) + " " + str(y))
 
@@ -61,6 +61,18 @@ def handle_status(status):
         space = our_coord.find(" ")
         our_y_coord = float(our_coord[:space])
 
+        our_coord = our_coord[space + 1:]
+        space = our_coord.find(" ")
+
+        our_dx = float(our_coord[:space])
+
+        our_coord = our_coord[space + 1:]
+        space = our_coord.find(" ")
+
+        our_dy = float(our_coord[:space])
+
+
+
         index = status.find("MINES")
         if int(status[index+6:index+7]) > 0:
             relevant_status = status[index+8:]
@@ -75,13 +87,17 @@ def handle_status(status):
 
             coord_y = float(relevant_status[:coord_end])
 
-            target(our_x_coord, our_y_coord, coord_x, coord_y)
+            mine = [coord_x, coord_y]
+
+            if mine not in mines:
+                mines.append(mine)
 
 
-
+            print(mines)
+            target(our_x_coord, our_y_coord, our_dx, our_dy, coord_x, coord_y)
 
 move(3.14/6)
 
 while(True):
-    sleep(1)
+    sleep(0.01)
     status()
