@@ -35,7 +35,8 @@ PASSWORD = "jzqzhang"
 def move(angle):
     run(USER, PASSWORD, "ACCELERATE " + str(angle) + " 1")
 
-def target(x, y):
+def target(our_x, our_y, x, y):
+    print(str(our_x) + " " + str(our_y))
     print(str(x) + " " + str(y))
 
 
@@ -50,6 +51,16 @@ def scan(x, y):
 
 def handle_status(status):
     if status[0:10] == "STATUS_OUT":
+        space = status.find(" ")
+        our_coord = status[space + 1:]
+        space = our_coord.find(" ")
+
+        x_coord = our_coord[:space]
+        our_x_coord = float(x_coord)
+        our_coord = our_coord[space + 1:]
+        space = our_coord.find(" ")
+        our_y_coord = float(our_coord[:space])
+
         index = status.find("MINES")
         if int(status[index+6:index+7]) > 0:
             relevant_status = status[index+8:]
@@ -64,7 +75,7 @@ def handle_status(status):
 
             coord_y = float(relevant_status[:coord_end])
 
-            target(coord_x, coord_y)
+            target(our_x_coord, our_y_coord, coord_x, coord_y)
 
 
 
