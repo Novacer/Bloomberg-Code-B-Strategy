@@ -100,7 +100,7 @@ def set_bomb(x, y, t):
     run(USER, PASSWORD, "BOMB " + str(x) + " " + str(y) + " " + str(t))
 
 def fast_bomb(x, y):
-    set_bomb(x, y, 10000)
+    set_bomb(x, y, 1)
 
 def bomb_mine(our_x, our_y, our_dx, our_dy, x, y):
     if math.fabs(our_x - x) < 100 and math.fabs(our_y - y) < 100:
