@@ -1,6 +1,9 @@
 import socket
 import sys
+import tkinter
 from time import sleep
+
+top = tkinter.Tk()
 
 mines = []
 
@@ -49,6 +52,12 @@ def brake():
 def scan(x, y):
     run(USER, PASSWORD, "SCAN " + str(x) + " " + str(y))
 
+def set_bomb(x, y, t):
+    run(USER, PASSWORD, "BOMB " + str(x) + " " + str(y) + " " + str(t))
+
+def fast_bomb(x, y):
+    set_bomb(x, y, 10000)
+
 def handle_status(status):
     if status[0:10] == "STATUS_OUT":
         space = status.find(" ")
@@ -92,11 +101,12 @@ def handle_status(status):
             if mine not in mines:
                 mines.append(mine)
 
-
             print(mines)
             target(our_x_coord, our_y_coord, our_dx, our_dy, coord_x, coord_y)
 
-move(3.14/6)
+move(3.14/3)
+
+#top.mainloop()
 
 while(True):
     sleep(0.01)
