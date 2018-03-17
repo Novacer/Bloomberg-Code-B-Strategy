@@ -8,6 +8,8 @@ from tkinter import *
 
 main = Tk()
 
+mines = []
+
 def leftKey(event):
     move(3.1415926535)
 
@@ -30,6 +32,9 @@ def auto(event):
         sleep(0.1)
         status()
 
+def delete(event):
+    mines = []
+    print("mines cleared!")
 
 
 
@@ -41,9 +46,8 @@ main.bind('<Up>', upKey)
 main.bind('<Down>', downKey)
 main.bind('<space>', space)
 main.bind('<a>', auto)
+main.bind('<d>', delete)
 frame.pack()
-
-mines = []
 
 def run(user, password, * commands):
     HOST, PORT = "codebb.cloudapp.net", 17429
@@ -211,4 +215,3 @@ move(3.14/4)
 
 
 main.mainloop()
-
