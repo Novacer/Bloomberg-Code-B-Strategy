@@ -1,9 +1,6 @@
 import socket
 import sys
 
-def strategy(command):
-    run("a", "a", "STATUS")
-
 
 def run(user, password, * commands):
     HOST, PORT = "codebb.cloudapp.net", 17429
@@ -33,9 +30,12 @@ def subscribe(user, password):
 USER = "Friends might come"
 PASSWORD = "jzqzhang"
 
-run(USER, PASSWORD, "STATUS")
+def move(angle):
+    run(USER, PASSWORD, "ACCELERATE " + angle + " 1")
 
+def status():
+    run(USER, PASSWORD, "STATUS")
 
-
-
+def brake():
+    run(USER, PASSWORD, "BRAKE")
 
