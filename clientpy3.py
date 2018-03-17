@@ -1,5 +1,6 @@
 import socket
 import sys
+from time import time
 from time import sleep
 import math
 
@@ -22,13 +23,24 @@ def downKey(event):
 def space(event):
     brake()
 
+def auto(event):
+    t_end = time() + 10
+
+    while time() < t_end:
+        sleep(0.1)
+        status()
+
+
+
 
 frame = Frame(main, width=100, height=100)
+
 main.bind('<Left>', leftKey)
 main.bind('<Right>', rightKey)
 main.bind('<Up>', upKey)
 main.bind('<Down>', downKey)
 main.bind('<space>', space)
+main.bind('<a>', auto)
 frame.pack()
 
 mines = []
@@ -86,22 +98,21 @@ def target(our_x, our_y, our_dx, our_dy, x, y):
     norm = math.sqrt(math.pow(direction_to_face[0], 2) + math.pow(direction_to_face[1], 2))
     if norm == 0:
         return
-
+    #print(direction_to_face)
+    #print(norm)
     d_norm = [x/norm for x in direction_to_face]
+    #print(d_norm)
     #v_norm_factor = math.sqrt(math.pow(current_velocity[0], 2) + math.pow(current_velocity[1], 2))
     #if v_norm_factor == 0:
-     #   return
+    #    return
 
     #v_norm = [x/v_norm_factor for x in current_velocity]
     #accel_vector = [(v_norm[0]) - (d_norm[0]), (v_norm[1]) - (d_norm[1])]
     #if accel_vector[0] == 0:
-     #   return
+    #   return
 
-    #accel_vector = [(3 * v_norm[0]) - (3 * d_norm[0]), (3 * v_norm[1]) - (3 * d_norm[1])]
-    #if accel_vector[0] == 0:
-       # return
-
-    angle = - math.atan2(d_norm[1],  d_norm[0])
+    #angle = - math.atan2(accel_vector[1],  accel_vector[0])
+    angle = math.acos(d_norm[0])
     print("moved: " + str(angle))
     move(angle)
 
@@ -141,6 +152,7 @@ def defend_mine(our_x, our_y, our_dx, our_dy, our_mine_x, our_mine_y):
         return
 
 def handle_status(status):
+
     if status[0:10] == "STATUS_OUT":
         index = status.find("MINES")
         if int(status[index+6:index+7]) > 0:
@@ -155,8 +167,7 @@ def handle_status(status):
             coord_end = relevant_status.find(" ")
 
             coord_y = float(relevant_status[:coord_end])
-            brake()
-            sleep(4)
+            sleep(3)
             aim(coord_x, coord_y)
             print("coords: ", coord_x, coord_y)
             mine = [coord_x, coord_y]
@@ -169,10 +180,9 @@ def handle_status(status):
             coords = mines[-1]
             aim(coords[0], coords[1])
 
-        else:
-            move(3.141592/4)
 
 def aim(x, y):
+
     m_status = ret_run(USER, PASSWORD, 'STATUS')
 
     m_space = m_status.find(" ")
@@ -194,13 +204,11 @@ def aim(x, y):
     m_space = our_coord.find(" ")
 
     our_dy = float(our_coord[:m_space])
-
+    brake()
     target(our_x_coord, our_y_coord, our_dx, our_dy, x, y)
 
-move(3.14/3)
+move(3.14/4)
+
 
 main.mainloop()
 
-while(True):
-    sleep(0.01)
-    status()
