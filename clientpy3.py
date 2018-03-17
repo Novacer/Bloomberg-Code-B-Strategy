@@ -1,6 +1,5 @@
 import socket
 import sys
-import tkinter
 from time import sleep
 import math
 
